@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>My Expenses | Accounts</title>
+
+    {% load static %}
+    <link rel='stylesheet' type='text/css' href="{% static 'plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css' %}">
+    <link rel='stylesheet' type='text/css'
+        href="{% static 'plugins/DataTables/DataTables-1.11.2/css/jquery.dataTables.min.css' %}">
+    <link rel='stylesheet' type='text/css'
+        href="{% static 'plugins/DataTables/DataTables-1.11.2/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'plugins/fontawesome-free/css/all.min.css' %}" />
+    <link rel='stylesheet' type='text/css' href="{% static 'css/mainapp.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Top Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">My Expenses</a>
+
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">New Transaction</a>
+                    </li>
+                </ul>
+
+                <label class="mr-3">Username</label>
+                <button type="button" class="btn btn-outline-primary my-2 my-sm-0">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <!-- Left Navigation -->
+                <div class="col-sm-3">
+                    <div class="list-group">
+                        <a href="../accounts" class="list-group-item list-group-item-action active">Accounts</a>
+                        <a href="../transactions" class="list-group-item list-group-item-action">Transactions</a>
+                        <a href="." class="list-group-item list-group-item-action">Scheduled Transactions</a>
+                        <a href="." class="list-group-item list-group-item-action">Debt Book</a>
+                    </div>
+                </div>
+
+                <!-- Right Content -->
+                <div class="col-sm-9">
+                    <!-- Breadcrumb -->
+                    <div class="row">
+                        <div class="col-sm-12 pl-0">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item text-muted">
+                                        <a href="../../accounts">Accounts</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">#{{acc.id}}</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="row">
+                        <div class="col-sm-3 pl-0">
+                            <form action="update/{{acc.id}}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="title" name="title" placeholder="Account Title" required onfocus="this.select();" value="{{acc.title}}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control money-field" id="balance" name="balance" placeholder="Initial Balance" disabled onfocus="this.select();" value="{{acc.balance}}">
+                                </div>
+                                <div class="form-group">
+                                    <select type="text" class="form-control" id="currency" name="currency" placeholder="Currency" disabled>
+                                        <option value="1">LBP</option>
+                                        <option value="2">USD</option>
+                                        <option value="3">EUR</option>
+                                    </select>
+                                </div>
+
+                                <div class="text-left">
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                    <button type="button" id="btnDelete" account-id="{{acc.id}}" class="btn btn-danger">Delete</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'plugins/jquery-3.5.1/jquery.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-4.6.0-dist/js/bootstrap.min.js' %}"></script>
+
+    <!-- jQuery Mask Plugin 1.14.16 -->
+    <script src="{% static 'plugins/jquery-mask-plugin/jquery.mask.min.js' %}"></script>
+
+    <script src="{% static 'js/mainapp.js' %}"></script>
+    <script src="{% static 'js/edit-account.js' %}"></script>
+</body>
+
+</html>

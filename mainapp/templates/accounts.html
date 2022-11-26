@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>My Expenses | Accounts</title>
+
+    {% load static %}
+    <link rel='stylesheet' type='text/css' href="{% static 'plugins/bootstrap-4.6.0-dist/css/bootstrap.min.css' %}">
+    <link rel='stylesheet' type='text/css' href="{% static 'plugins/DataTables/DataTables-1.11.2/css/jquery.dataTables.min.css' %}">
+    <link rel='stylesheet' type='text/css' href="{% static 'plugins/DataTables/DataTables-1.11.2/css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type='text/css' href="{% static 'plugins/fontawesome-free/css/all.min.css' %}" />
+    <link rel='stylesheet' type='text/css' href="{% static 'css/mainapp.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Top Navigation Bar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+                aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="#">My Expenses</a>
+
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">New Transaction</a>
+                    </li>
+                </ul>
+
+                <label class="mr-3">Username</label>
+                <button type="button" class="btn btn-outline-primary my-2 my-sm-0">Logout</button>
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div class="container-fluid mt-3">
+            <div class="row">
+                <!-- Left Navigation -->
+                <div class="col-sm-3">
+                    <div class="list-group">
+                        <a href="." class="list-group-item list-group-item-action active">Accounts</a>
+                        <a href="../transactions" class="list-group-item list-group-item-action">Transactions</a>
+                        <a href="." class="list-group-item list-group-item-action">Scheduled Transactions</a>
+                        <a href="." class="list-group-item list-group-item-action">Debt Book</a>
+                    </div>
+                </div>
+
+                <!-- Right Content -->
+                <div class="col-sm-9">
+                    <!-- Breadcrumb -->
+                    <div class="row">
+                        <div class="col-sm-12 pl-0">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item active" aria-current="page">Accounts</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 pl-0">
+                            <table id="tblAccounts"
+                                class="table table-bordered table-striped table-hover w-100 display nowrap">
+                                <thead>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Balance</th>
+                                    <th>Currency</th>
+                                    <th>Created On</th>
+                                    <th>Last Update</th>
+                                </thead>
+
+                                <tbody>
+                                    {% for acc in accounts %}
+                                    <tr>
+                                        <td>
+                                            <a class="" href="edit-account/{{acc.id}}">{{acc.id}}</a>                                            
+                                        </td>
+                                        <td>{{acc.title}}</td>
+                                        <td class="money-field">{{acc.balance|floatformat:"2g"}}</td>
+                                        <td>
+                                            {% if acc.currency == 1 %}
+                                                LBP
+                                            {% elif acc.currency == 2 %}
+                                                USD
+                                            {% elif acc.currency == 3 %}
+                                                EUR
+                                            {% endif %}
+                                        </td>
+                                        <td title="{{acc.createdOn|date:'h:i:s'}}">{{acc.createdOn|date:"d-m-Y"}}</td>
+                                        <td title="{{acc.lastUpdate|date:'h:i:s'}}">{{acc.lastUpdate|date:"d-m-Y"}}</td>                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'plugins/jquery-3.5.1/jquery.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-4.6.0-dist/js/bootstrap.min.js' %}"></script>
+
+    <!-- DataTables 1.11.2 -->
+    <script src="{% static 'plugins/DataTables/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/pdfmake-0.3.0-alpha.0/pdfmake.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/pdfmake-0.3.0-alpha.0/vfs_fonts.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/DataTables-1.11.2/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/DataTables-1.11.2/js/dataTables.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Buttons-1.6.4/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Buttons-1.6.4/js/buttons.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Buttons-1.6.4/js/buttons.colVis.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Buttons-1.6.4/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Buttons-1.6.4/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Responsive-2.2.9/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Responsive-2.2.9/js/responsive.bootstrap4.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Scroller-2.0.5/js/dataTables.scroller.min.js' %}"></script>
+    <script src="{% static 'plugins/DataTables/Scroller-2.0.5/js/scroller.bootstrap4.min.js' %}"></script>
+    <script>
+        // This code is used for sorting formatted numbers in datatables
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "formatted-num-pre": function (a) {
+                a = (a === "-" || a === "") ? 0 : a.replace(/[^\d\-\.]/g, "");
+                return parseFloat(a);
+            },
+            "formatted-num-asc": function (a, b) {
+                return a - b;
+            },
+            "formatted-num-desc": function (a, b) {
+                return b - a;
+            }
+        });
+
+        // This code is used for sorting formatted dates in datatables
+        jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+            "date-eu-pre": function (date) {
+                date = date.replace(" ", "");
+
+                if (!date) {
+                    return 0;
+                }
+
+                var year;
+                var eu_date = date.split(/[\.\-\/]/);
+
+                /year (optional)/
+                if (eu_date[2]) {
+                    year = eu_date[2];
+                } else {
+                    year = 0;
+                }
+
+                /month/
+                var month = eu_date[1];
+                if (month.length == 1) {
+                    month = 0 + month;
+                }
+
+                /day/
+                var day = eu_date[0];
+                if (day.length == 1) {
+                    day = 0 + day;
+                }
+
+                return (year + month + day) * 1;
+            },
+
+            "date-eu-asc": function (a, b) {
+                return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+            },
+
+            "date-eu-desc": function (a, b) {
+                return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+            }
+        });
+    </script>
+
+    <script src="{% static 'js/mainapp.js' %}"></script>
+    <script src="{% static 'js/accounts.js' %}"></script>
+</body>
+
+</html>
