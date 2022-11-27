@@ -18,11 +18,13 @@ def accounts(request):
 def new_account(request):
     return render(request, "new-account.html")
 
-def edit_account(request,id):
+
+def edit_account(request, id):
     context = {
         'acc': Accounts.objects.get(id=id)
     }
     return render(request, "edit-account.html", context)
+
 
 def insert(request):
     if request.method == 'POST':
@@ -33,6 +35,7 @@ def insert(request):
         acc.save()
     return redirect("accounts")
 
+
 def update(request, id):
     if request.method == 'POST':
         title = request.POST['title']
@@ -40,6 +43,7 @@ def update(request, id):
         acc.title = title
         acc.save()
     return redirect("accounts")
+
 
 def delete(request, id):
     acc = Accounts.objects.get(id=id)
@@ -49,3 +53,7 @@ def delete(request, id):
 
 def transactions(request):
     return render(request, "transactions.html")
+
+
+def new_transaction(request):
+    return render(request, "new-transaction.html")

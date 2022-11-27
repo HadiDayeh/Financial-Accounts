@@ -1,74 +1,6 @@
 $(document).ready(function () {
     let tblTransactions = $("#tblTransactions");
     tblTransactions.DataTable({
-        // ajax: {
-        //     url: "/ajax/agents/selectAgents.php",
-        //     type: "POST",
-        //     dataSrc: "data.agents",
-        //     data: {
-        //         type: 1,
-        //     },
-        // },
-        // columns: [
-        //     {
-        //         data: "strImgURL",
-        //         render: function (data, type, row) {
-        //             return `
-        //                 <div class="product-img">
-        //                     <img src="/assets/img/agents/customers/`+ data + `" alt="Customer Image" class="img-size-50">
-        //                 </div>
-        //             `;
-        //         }
-        //     }, // strImgURL
-        //     {
-        //         data: "name",
-        //     }, // name
-        //     {
-        //         data: "strPhone",
-        //     }, // strPhone
-        //     {
-        //         data: "strJoinedDate",
-        //     }, // strJoinedDate
-        //     {
-        //         data: "strLastUpdateDate",
-        //     }, // strLastUpdate
-        //     {
-        //         data: null,
-        //         render: function (data, type, row) {
-        //             const allowDelete = parseInt(row['idAgent']) > 1000;
-        //             const allowReceipts = parseInt(row['idAgent']) > 500;
-
-        //             return `
-        //                 <div class="row">
-        //                     <div class="col text-center">
-        //                         <button type="button" class="btn bg-gradient-info btn-xs view-customer" title="View" data-izimodal-open="#modalViewAgent">
-        //                             <i class="fas fa-eye"></i>
-        //                         </button>
-
-        //                         <button type="button" class="btn bg-gradient-warning btn-xs edit-customer" title="Edit" data-izimodal-open="#modalEditAgent">
-        //                             <i class="fas fa-edit"></i>
-        //                         </button>
-
-        //                         <button class="btn bg-gradient-danger btn-xs delete-customer ` + (allowDelete == true ? '' : 'd-none') + `" title="Delete" data-izimodal-open="#modalDeleteAgent">
-        //                             <i class="fas fa-trash-alt"></i>
-        //                         </button>
-        //                     </div>
-        //                 </div>
-        //                 <div class="row mt-1">
-        //                     <div class="col text-center">
-        //                         <button type="button" class="btn bg-gradient-pink btn-xs customer-receipts ` + (allowReceipts == true ? '' : 'd-none') + `" title="Receipts" data-izimodal-open="#modalCustomerReceipts">
-        //                             <i class="fas fa-briefcase"></i>
-        //                         </button>
-
-        //                         <button type="button" class="btn bg-gradient-teal btn-xs account-transactions" title="Account Transactions" data-izimodal-open="#modalAccountTransactions">
-        //                             <i class="fas fa-credit-card"></i>
-        //                         </button>
-        //                     </div>
-        //                 </div>
-        //             `;
-        //         }
-        //     }, // actions
-        // ],
         columnDefs: [
             {
                 targets: [0],
@@ -126,8 +58,8 @@ $(document).ready(function () {
                 text: "<i class='fas fa-plus'></i> New Transaction",
                 className: "btn-dataTable bg-gradient-info",
                 attr: {
-                    title: 'Add new user',
-                    "data-izimodal-open": "#modalNewAgent",
+                    title: 'Add new transaction',
+                    onclick: 'location.href = "http://127.0.0.1:8000/transactions/new-transaction";',
                 },
             }, // add new
         ],

@@ -27,4 +27,5 @@ urlpatterns = [
     path('accounts/edit-account/update/<int:id>', views.update, name="update"),
     path('accounts/delete/<int:id>', views.delete, name="delete"),
     path('transactions/', views.transactions, name="transactions"),
+    path('transactions/new-transaction', views.new_transaction, name="new_transaction"),
 ]
