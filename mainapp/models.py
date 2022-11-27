@@ -5,7 +5,14 @@ from django.db import models
 
 class Accounts(models.Model):
     title = models.CharField(max_length=255)
-    balance = models.DecimalField(max_digits=15,decimal_places=2)
+    balance = models.DecimalField(max_digits=15, decimal_places=2)
     currency = models.IntegerField()
     createdOn = models.DateTimeField(auto_now=True)
     lastUpdate = models.DateTimeField(auto_now=True)
+
+
+class Transactions(models.Model):
+    accFrom = models.IntegerField()
+    accTo = models.IntegerField()
+    amount = models.DecimalField(max_digits=15, decimal_places=2)
+    transType = models.IntegerField()
